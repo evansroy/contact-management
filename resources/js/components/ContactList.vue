@@ -22,7 +22,7 @@
               <td class="py-2 px-4">{{ contact.email }}</td>
               <td class="py-2 px-4">{{ contact.phone }}</td>
               <td class="py-2 px-4">{{ contact.group.name }}</td>
-              <td class="py-2 px-4">
+              <td class="py-2 px-4 space-x-1">
                 <button @click="editContact(contact.id)" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">
                   Edit
                 </button>
