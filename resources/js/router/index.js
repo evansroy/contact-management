@@ -16,7 +16,12 @@ const routes = [
     },
     { path: "/groups", component: GroupList, name: "groups" },
     { path: "/groups/add", component: GroupForm, name: "add-group" },
-    { path: "/groups/edit/:id", component: GroupForm, name: "edit-group" },
+    { 
+      path: "/groups/edit/:id",
+      component: GroupForm,
+      name: "edit-group",
+      props:true,
+    },
 ];
 
 const router = createRouter({

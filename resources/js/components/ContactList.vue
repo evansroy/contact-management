@@ -105,6 +105,7 @@ export default {
         deleteContact(id) {
             axios.delete(`/api/contacts/${id}`).then(() => {
                 this.fetchContacts();
+                toast.success("Contact Deleted successfully");
             });
         },
     },
