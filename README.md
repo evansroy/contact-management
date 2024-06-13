@@ -41,6 +41,7 @@ To run this project Locally, follow these steps:
         DB_USERNAME=your_database_username
         DB_PASSWORD=your_database_password`
     - Run migrations to create database tables: `php artisan migrate`.
+    - Seed the Database to generate default data `php artisan db:seed`
 
 4. Run the development server:
     `php artisan serve` # Start the Laravel development server
