@@ -23,6 +23,7 @@ class GroupFactory extends Factory
         return [
             'id' => (string) Str::uuid(),
             'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
         ];
     }
 }

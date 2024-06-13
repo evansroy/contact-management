@@ -23,6 +23,7 @@ class StoreGroupRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:groups',
+            'description' => 'required',
         ];
     }
 }
