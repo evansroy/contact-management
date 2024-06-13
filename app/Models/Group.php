@@ -23,4 +23,9 @@ class Group extends Model
             $model->id = (string) Str::uuid();
         });
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

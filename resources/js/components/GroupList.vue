@@ -44,6 +44,12 @@
                             >
                                 Delete
                             </button>
+                            <button
+                                @click="viewGroupDetails(group.id)"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                            >
+                                View Details
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -54,6 +60,7 @@
 
 <script>
 import axios from "axios";
+import { useToast } from "vue-toastification"; // Assuming you use toast notifications
 
 export default {
     data() {
@@ -95,8 +102,15 @@ export default {
         deleteGroup(id) {
             axios.delete(`/api/groups/${id}`).then(() => {
                 this.fetchGroups();
-                toast.success("Group deleted successfully");
+                this.showToast("Group deleted successfully", "success");
             });
+        },
+        viewGroupDetails(id) {
+            this.$router.push({ name: "group-details", params: { id } });
+        },
+        showToast(message, type) {
+            const toast = useToast();
+            toast[type](message);
         },
     },
 };

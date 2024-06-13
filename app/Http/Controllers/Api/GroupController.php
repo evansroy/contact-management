@@ -32,7 +32,10 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return $group;
+        // Eager load the contacts relationship
+        $group->load('contacts');
+
+        return response()->json($group);
     }
 
     /**

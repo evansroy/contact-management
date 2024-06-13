@@ -3,6 +3,7 @@ import ContactList from "../components/ContactList.vue";
 import ContactForm from "../components/ContactForm.vue";
 import GroupList from "../components/GroupList.vue";
 import GroupForm from "../components/GroupForm.vue";
+import GroupView from "../components/GroupView.vue";
 
 const routes = [
     { path: "/", component: ContactList, name: "home" },
@@ -21,6 +22,11 @@ const routes = [
       component: GroupForm,
       name: "edit-group",
       props:true,
+    },
+    { 
+      path: "/groups/view/:id",
+      component: GroupView,
+      name: "group-details",
     },
 ];
 
