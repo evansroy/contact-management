@@ -1,5 +1,11 @@
-import { createApp } from 'vue';
-import App from '../js/components/App.vue';
-import router from './router';
+import { createApp } from "vue";
+import App from "../js/components/App.vue";
+import router from "./router";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
-createApp(App).use(router).mount('#app');
+App.use(Toast, {
+    timeout: 3000,
+});
+
+createApp(App).use(router).mount("#app");
