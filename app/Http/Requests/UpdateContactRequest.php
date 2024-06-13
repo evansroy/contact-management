@@ -22,9 +22,9 @@ class UpdateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:contacts,email,' . $this->route('contact'),
-            'phone' => 'nullable',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:contacts,email,' . $this->route('contact')->id,
+            'phone' => 'nullable|string|max:20',
             'group_id' => 'required|exists:groups,id',
         ];
     }

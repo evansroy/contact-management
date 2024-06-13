@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -40,9 +41,14 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
-        $contact->update($request->validated());
-
-        return response()->json($contact, 200);
+        try {
+            Log::info('Updating contact', ['data' => $request->validated()]);
+            $contact->update($request->validated());
+            return response()->json($contact, 200);
+        } catch (\Exception $e) {
+            Log::error('Error updating contact: ' . $e->getMessage());
+            return response()->json(['message' => 'Error updating contact', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**

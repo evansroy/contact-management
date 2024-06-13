@@ -120,11 +120,14 @@ export default {
                     "Error in handleSubmit:",
                     error.response ? error.response.data : error.message
                 );
+                console.error("Detailed Error:", error); 
             }
         },
         async handleDelete() {
+            const toast = useToast();
             try {
                 await axios.delete(`/api/contacts/${this.contact.id}`);
+                toast.success("Contact deleted successfully");
                 this.$router.push({ name: "home" });
             } catch (error) {
                 console.error(
