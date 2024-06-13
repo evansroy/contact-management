@@ -23,6 +23,7 @@ class UpdateGroupRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:groups,name,' . $this->route('group'),
+            'description' => 'required',
         ];
     }
 }

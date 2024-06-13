@@ -13,6 +13,10 @@ class Group extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
     protected static function boot() {
         parent::boot();
         static::creating(function ($model){
