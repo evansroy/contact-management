@@ -23,30 +23,30 @@ This project is a Contacts Management Application that allows users to perform C
 To run this project Locally, follow these steps:
 
 1. Clone the repository:
-   git clone https://github.com/evansroy/contact-management.git
+   `git clone https://github.com/evansroy/contact-management.git`
 
-    cd contact-management
+    `cd contact-management`
 
 2. Install dependencies:
-   composer install # Install PHP dependencies for Laravel
-   npm install # Install Node.js dependencies for Vue.js
+   `composer install` # Install PHP dependencies for Laravel
+   `npm install` # Install Node.js dependencies for Vue.js
 3. Database setup:
    - Create a new database for the project.
 
-   - Copy .env.example to .env and configure your database connection settings:
-        DB_CONNECTION=mysql
+   - Copy `.env.example` to `.env` and configure your database connection settings:
+        `DB_CONNECTION=mysql
         DB_HOST=127.0.0.1
         DB_PORT=3306
         DB_DATABASE=your_database_name
         DB_USERNAME=your_database_username
-        DB_PASSWORD=your_database_password
-    - Run migrations to create database tables: php artisan migrate.
+        DB_PASSWORD=your_database_password`
+    - Run migrations to create database tables: `php artisan migrate`.
 
 4. Run the development server:
-    php artisan serve # Start the Laravel development server
-    npm run watch # Start the Vue.js development server
-The Laravel server will start at http://localhost:8000, and the Vue.js development server will start at http://localhost:8080 (or another port if specified).
+    `php artisan serve` # Start the Laravel development server
+    `npm run dev` # Start the Vue.js development server
+The Laravel server will start at `http://localhost:8000`, and the Vue.js development server will start at `http://localhost:8080` (or another port if specified).
 
 5. Access the application:
 
-Open your web browser and go to http://localhost:8080 to access the application.
+Open your web browser and go to `http://localhost:8080` to access the application.
