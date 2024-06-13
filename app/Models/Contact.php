@@ -13,6 +13,13 @@ class Contact extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'group_id',
+    ];
+    
     protected static function boot()
     {
         parent::boot();

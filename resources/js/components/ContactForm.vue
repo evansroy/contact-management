@@ -1,104 +1,105 @@
 <template>
-    <div>
-      <h1>{{ isEditMode ? 'Edit Contact' : 'Add Contact' }}</h1>
-      <form @submit.prevent="handleSubmit">
-        <div>
-          <label for="name">Name</label>
-          <input type="text" id="name" v-model="form.name" />
-          <span v-if="!$v.form.name.required">Name is required</span>
-        </div>
-  
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="form.email" />
-          <span v-if="!$v.form.email.required">Email is required</span>
-          <span v-if="!$v.form.email.email">Email must be valid</span>
-        </div>
-  
-        <div>
-          <label for="phone">Phone</label>
-          <input type="text" id="phone" v-model="form.phone" />
-        </div>
-  
-        <div>
-          <label for="group_id">Group</label>
-          <select id="group_id" v-model="form.group_id">
-            <option v-for="group in groups" :key="group.id" :value="group.id">{{ group.name }}</option>
-          </select>
-          <span v-if="!$v.form.group_id.required">Group is required</span>
-        </div>
-  
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import { required, email } from '@vuelidate/validators';
-  import useVuelidate from '@vuelidate/core';
-  import axios from 'axios';
-  import { ref, reactive, toRefs } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  
-  export default {
-    name: 'ContactForm',
-    setup() {
-      const route = useRoute();
-      const router = useRouter();
-      const isEditMode = ref(!!route.params.id);
-  
-      const form = reactive({
+  <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Contact Form</h2>
+    <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label class="block text-gray-700">Name</label>
+        <input type="text" v-model="contact.name" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Email</label>
+        <input type="email" v-model="contact.email" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Phone</label>
+        <input type="text" v-model="contact.phone" class="w-full p-2 border border-gray-300 rounded mt-1">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Group</label>
+        <select v-model="contact.group_id" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+          <option v-for="group in groups" :key="group.id" :value="group.id">{{ group.name }}</option>
+        </select>
+      </div>
+      <div class="flex justify-between">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+        <button type="button" @click="handleDelete" class="bg-red-500 text-white px-4 py-2 rounded" v-if="isEditing">Delete</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      contact: {
+        id: '',
         name: '',
         email: '',
         phone: '',
-        group_id: '',
-      });
-  
-      const rules = {
-        name: { required },
-        email: { required, email },
-        group_id: { required },
-      };
-  
-      const v$ = useVuelidate(rules, form);
-      const groups = ref([]);
-  
-      const fetchGroups = async () => {
+        group_id: ''
+      },
+      groups: [],
+      isEditing: false
+    };
+  },
+  created() {
+    this.fetchGroups();
+  },
+  methods: {
+    async fetchGroups() {
+      try {
         const response = await axios.get('/api/groups');
-        groups.value = response.data;
-      };
-  
-      const fetchContact = async (id) => {
-        const response = await axios.get(`/api/contacts/${id}`);
-        Object.assign(form, response.data);
-      };
-  
-      const handleSubmit = async () => {
-        v$.value.$touch();
-        if (!v$.value.$invalid) {
-          if (isEditMode.value) {
-            await axios.put(`/api/contacts/${route.params.id}`, form);
-          } else {
-            await axios.post('/api/contacts', form);
-          }
-          router.push({ name: 'contacts' });
-        }
-      };
-  
-      if (isEditMode.value) {
-        fetchContact(route.params.id);
+        this.groups = response.data;
+      } catch (error) {
+        console.error('Error fetching groups:', error.response ? error.response.data : error.message);
       }
-  
-      fetchGroups();
-  
-      return {
-        ...toRefs(form),
-        groups,
-        handleSubmit,
-        isEditMode,
-        v$,
-      };
     },
-  };
-  </script>
-  
+    async handleSubmit() {
+      try {
+        if (this.isEditing) {
+          await axios.put(`/api/contacts/${this.contact.id}`, this.contact);
+        } else {
+          await axios.post('/api/contacts', this.contact);
+        }
+        this.resetForm();
+      } catch (error) {
+        console.error('Error in handleSubmit:', error.response ? error.response.data : error.message);
+      }
+    },
+    async handleDelete() {
+      try {
+        await axios.delete(`/api/contacts/${this.contact.id}`);
+        this.resetForm();
+      } catch (error) {
+        console.error('Error in handleDelete:', error.response ? error.response.data : error.message);
+      }
+    },
+    resetForm() {
+      this.contact = {
+        id: '',
+        name: '',
+        email: '',
+        phone: '',
+        group_id: ''
+      };
+      this.isEditing = false;
+    },
+    async loadContact(id) {
+      try {
+        const response = await axios.get(`/api/contacts/${id}`);
+        this.contact = response.data;
+        this.isEditing = true;
+      } catch (error) {
+        console.error('Error in loadContact:', error.response ? error.response.data : error.message);
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* Add any additional styling here */
+</style>
