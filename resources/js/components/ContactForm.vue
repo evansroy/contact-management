@@ -66,6 +66,7 @@
 
 <script>
 import axios from "axios";
+import { useToast } from "vue-toastification";
 
 export default {
     props: ["id"],
@@ -101,16 +102,19 @@ export default {
             }
         },
         async handleSubmit() {
+            const toast = useToast();
             try {
                 if (this.isEditing) {
                     await axios.put(
                         `/api/contacts/${this.contact.id}`,
                         this.contact
                     );
+                    toast.success("Contact updated successfully");
                 } else {
                     await axios.post("/api/contacts", this.contact);
+                    toast.success("Contact added successfully");
                 }
-                this.resetForm();
+                this.$router.push({ name: "home" });
             } catch (error) {
                 console.error(
                     "Error in handleSubmit:",
@@ -121,7 +125,7 @@ export default {
         async handleDelete() {
             try {
                 await axios.delete(`/api/contacts/${this.contact.id}`);
-                this.resetForm();
+                this.$router.push({ name: "home" });
             } catch (error) {
                 console.error(
                     "Error in handleDelete:",
