@@ -95,6 +95,7 @@ export default {
         deleteGroup(id) {
             axios.delete(`/api/groups/${id}`).then(() => {
                 this.fetchGroups();
+                toast.success("Group deleted successfully");
             });
         },
     },

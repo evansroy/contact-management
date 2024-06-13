@@ -86,7 +86,7 @@ export default {
             try {
                 await axios.delete(`/api/groups/${this.group.id}`);
                 toast.success("Group deleted successfully");
-                this.$router.push({ name: "home" });
+                this.$router.push({ name: "groups" });
             } catch (error) {
                 console.error(
                     "Error in handleDelete:",
