@@ -1,12 +1,18 @@
 <template>
     <div class="container mx-auto p-4">
-        <div class="mb-4">
+        <div class="mb-4 flex justify-between">
             <button
                 @click="addContact"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
                 Add Contact
             </button>
+            <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search contacts..."
+                class="p-2 border border-gray-300 rounded"
+            />
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white">
@@ -21,7 +27,7 @@
                 </thead>
                 <tbody>
                     <tr
-                        v-for="contact in contacts"
+                        v-for="contact in filteredContacts"
                         :key="contact.id"
                         class="border-t"
                     >
@@ -52,11 +58,34 @@
 
 <script>
 import axios from "axios";
+
 export default {
     data() {
         return {
             contacts: [],
+            searchQuery: "",
         };
+    },
+    computed: {
+        filteredContacts() {
+            return this.contacts.filter((contact) => {
+                return (
+                    contact.name
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase()) ||
+                    contact.email
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase()) ||
+                    (contact.phone &&
+                        contact.phone
+                            .toLowerCase()
+                            .includes(this.searchQuery.toLowerCase())) ||
+                    contact.group.name
+                        .toLowerCase()
+                        .includes(this.searchQuery.toLowerCase())
+                );
+            });
+        },
     },
     created() {
         this.fetchContacts();
