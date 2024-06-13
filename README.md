@@ -50,3 +50,25 @@ The Laravel server will start at `http://localhost:8000`, and the Vue.js develop
 5. Access the application:
 
 Open your web browser and go to `http://localhost:8080` to access the application.
+
+You will see a page like this ![image](https://github.com/evansroy/contact-management/assets/51271888/a0a31a2e-35be-45f5-bcfa-ec3a409d2d91)
+Click on Add Contact button, The following will be shown fill the details and click on submit to add new contact
+![image](https://github.com/evansroy/contact-management/assets/51271888/de6b1b3e-80a4-4e3d-979d-69d0befd1089)
+
+On the Nav bar on your right click on groups and a list of all groups will be shown as below 
+![image](https://github.com/evansroy/contact-management/assets/51271888/45576fff-f2d9-404b-a76d-febb65bf7274)
+
+To add a Group click on Add group button and Form will be show as below : 
+![image](https://github.com/evansroy/contact-management/assets/51271888/63b8f11c-bd58-476a-a035-f946e09ac50c)
+
+After filling the the form click on submit button to add group
+
+You can also click on View details button to view the group detail and the contacts associated to the groups.
+Edit button to Edit Details of the group. the some logic applies on contact section also.
+
+
+
+
+
+
+
