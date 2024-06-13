@@ -1,6 +1,6 @@
 ## Contact Management Application
 
-This project is a Contacts Management Application that allows users to perform CRUD (Create, Read, Update, Delete) operations on contacts and group them. It uses Vue.js for the frontend to provide a responsive and interactive user interface, and Laravel for the backend to handle data storage and API endpoints.
+This project is a Contacts Management Application that allows users to perform CRUD (Create, Read, Update, Delete) operations on contacts and group them. It uses Vue.js for the front end to provide a responsive and interactive user interface, and Laravel for the backend to handle data storage and API endpoints.
 
 ## Features
 
